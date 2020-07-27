@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+}
+
+group = 'xyz.rpolnx'
+version = '0.0.1-SNAPSHOT'
+description = 'design-patterns-gof'
+sourceCompatibility = '11'
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

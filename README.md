@@ -24,6 +24,9 @@ These patterns can be resumed on:
  - Explicit (constructor) vs implicit (DI, reflection)
  - Wholeslale (single statement) vs piecewise (step-by-step)
 
+## Builder
+When constructing an object is complicated, sometimes it could be created in parts. This design pattern help us to "buid" part-by-part
+
 # Structural Patterns
 
 ## Introduction
