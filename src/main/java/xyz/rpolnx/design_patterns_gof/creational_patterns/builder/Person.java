@@ -9,7 +9,13 @@ import lombok.ToString;
 @ToString
 public class Person {
     public String name;
-    public String position;
+
+    //address
+    public String streetAddress, postcode, city;
+
+    // employment
+    public String companyName, position;
+    public int annualIncome;
 }
 
 class PersonBuilder<SELF extends PersonBuilder<SELF>> {
@@ -47,16 +53,17 @@ class EmployeeBuilder extends PersonBuilder<EmployeeBuilder> {
 
 class PersonRunner {
     public static void main(String[] args) {
-        PersonBuilder pb = new PersonBuilder();
+        PersonBuilder pb = new PersonBuilder<>();
         Person rodrigo = pb.withName("Rodrigo").build();
         System.out.println(rodrigo + "\n\n");
 
-        System.out.println("If we inheritance, we got a problem: we cannot use the child as the initial builder. " +
-                "If we do, we cannot use father's method. A way to solve this is casting with generics");
+        System.out.println("If we inheritance, we got a problem: if we use the child as initial builder, we cannot use " +
+                "father's methods. This is because the father's returns is an instance of father and not from the child." +
+                "A way to solve this is casting with generics");
 
         EmployeeBuilder pbFluentInheritance = new EmployeeBuilder();
-        Person rodrigoWithInheritance = pbFluentInheritance.
-                withName("Rodrigo")
+        Person rodrigoWithInheritance = pbFluentInheritance
+                .withName("Rodrigo")
                     .worksAt("Developer")
                 .build();
         System.out.println(rodrigoWithInheritance);
