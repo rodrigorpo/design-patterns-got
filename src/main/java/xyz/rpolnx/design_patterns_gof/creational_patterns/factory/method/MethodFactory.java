@@ -47,6 +47,7 @@ class Point {
 
 public class MethodFactory {
     public static void main(String[] args) {
+
         Point point1 = Point.newCartesianPoint(2, 3);
         Point point2 = Point.newPolarPoint(1, 45);
 
