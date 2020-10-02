@@ -1,6 +1,4 @@
-package xyz.rpolnx.design_patterns_gof;
-
-import xyz.rpolnx.design_patterns_gof.creational_patterns.builder.Person;
+package xyz.rpolnx.design_patterns_gof.creational_patterns.builder;
 
 class PersonFacadeBuilder {
     protected Person person = new Person();
