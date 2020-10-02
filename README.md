@@ -50,6 +50,17 @@ These patterns can be resumed on:
 ## Builder
 When constructing an object is complicated, sometimes it could be created in parts. This design pattern help us to 
 "build" part-by-part.
+- Builder - construct piece-py-piece based in methods
+- Fluent Builder - create steps that may create a cascade to each other. When inheritance builders, can create a problem
+and can be solved using generics.
+- Faceted Builder - naturally creates an abstraction to change from lower to higher builders and vice-versa. Can be used
+with fluent builder and create a cascade.
+
+## Factory
+This idea of pattern is to deal with wholesale creation. It may exist in a separate class.
+Java not allow us to create methods with the same name, same type and same number of arguments (like equals constructors);
+- Factory method
+- Abstract Factory
 
 # Structural Patterns
 
