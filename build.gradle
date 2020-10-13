@@ -4,13 +4,15 @@ plugins {
 
 repositories {
     mavenLocal()
+    jcenter()
 }
 
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
-    implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation 'org.apache.commons:commons-lang3:3.11'
+
 }
 
 group = 'xyz.rpolnx'
