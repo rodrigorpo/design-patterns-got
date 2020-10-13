@@ -58,9 +58,18 @@ with fluent builder and create a cascade.
 
 ## Factory
 This idea of pattern is to deal with wholesale creation. It may exist in a separate class.
-Java not allow us to create methods with the same name, same type and same number of arguments (like equals constructors);
-- Factory method
-- Abstract Factory
+
+### Factory method
+- Java not allow us to create methods with the same name, same type and same number of arguments (like equals constructors);
+
+### Abstract Factory
+- When each object construction require a separated logic, or you want to generalize some methods to deal with abstraction and not implementation
+- It decouple the construction of object by extracting an "abstract factory" that can be implemented by other classes and handle creation logic.
+
+Pros: SRP, OCP
+
+Cons: more complexity, many classes to use this pattern 
+
 
 # Structural Patterns
 
