@@ -70,6 +70,9 @@ Pros: SRP, OCP
 
 Cons: more complexity, many classes to use this pattern 
 
+## Prototype
+- Create new objects copying properties from older one. 
+- Always return new reference for all inner props and objects instead of point to old object's references.
 
 # Structural Patterns
 
