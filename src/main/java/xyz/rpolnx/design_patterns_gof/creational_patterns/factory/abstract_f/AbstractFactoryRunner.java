@@ -42,8 +42,8 @@ abstract class DebitCard extends Card {
     abstract BigDecimal getBalance();
 }
 
-class MastercardCredit extends CreditCard {
-    public MastercardCredit(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+class CreditMastercard extends CreditCard {
+    public CreditMastercard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
         super(number, cardHolderName, securityCode, dueDate);
     }
 
@@ -54,8 +54,8 @@ class MastercardCredit extends CreditCard {
     }
 }
 
-class MastercardDebit extends DebitCard {
-    public MastercardDebit(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+class DebitMastercard extends DebitCard {
+    public DebitMastercard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
         super(number, cardHolderName, securityCode, dueDate);
     }
 
@@ -67,8 +67,8 @@ class MastercardDebit extends DebitCard {
     }
 }
 
-class VisaCredit extends CreditCard {
-    public VisaCredit(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+class VisaCreditCard extends CreditCard {
+    public VisaCreditCard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
         super(number, cardHolderName, securityCode, dueDate);
     }
 
@@ -79,8 +79,8 @@ class VisaCredit extends CreditCard {
     }
 }
 
-class VisaDebit extends DebitCard {
-    public VisaDebit(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+class VisaDebitCard extends DebitCard {
+    public VisaDebitCard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
         super(number, cardHolderName, securityCode, dueDate);
     }
 
@@ -92,54 +92,49 @@ class VisaDebit extends DebitCard {
 }
 
 interface CardFactory {
-    Card create(String number, String cardHolderName, String securityCode, LocalDate dueDate);
+    DebitCard createDebitCard(String number, String cardHolderName, String securityCode, LocalDate dueDate);
+
+    CreditCard createCreditCard(String number, String cardHolderName, String securityCode, LocalDate dueDate);
 }
 
-interface DebitCardFactory extends CardFactory {
+class VisaCardFactory implements CardFactory {
     @Override
-    DebitCard create(String number, String cardHolderName, String securityCode, LocalDate dueDate);
-}
+    public DebitCard createDebitCard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+        return new VisaDebitCard(number, cardHolderName, securityCode, dueDate);
+    }
 
-interface CreditCardFactory extends CardFactory {
     @Override
-    CreditCard create(String number, String cardHolderName, String securityCode, LocalDate dueDate);
-}
-
-class VisaCreditCardFactory implements CreditCardFactory {
-    @Override
-    public CreditCard create(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
-        return new VisaCredit(number, cardHolderName, securityCode, dueDate);
+    public CreditCard createCreditCard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+        return new VisaCreditCard(number, cardHolderName, securityCode, dueDate);
     }
 }
 
-class MastercardCreditCardFactory implements CreditCardFactory {
+class MastercardFactory implements CardFactory {
     @Override
-    public CreditCard create(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
-        return new MastercardCredit(number, cardHolderName, securityCode, dueDate);    }
-}
+    public DebitCard createDebitCard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+        return new DebitMastercard(number, cardHolderName, securityCode, dueDate);
+    }
 
-class VisaDebitCardFactory implements DebitCardFactory {
     @Override
-    public DebitCard create(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
-        return new VisaDebit(number, cardHolderName, securityCode, dueDate);    }
-}
-
-class MastercardDebitCardFactory implements DebitCardFactory {
-    @Override
-    public DebitCard create(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
-        return new MastercardDebit(number, cardHolderName, securityCode, dueDate);    }
+    public CreditCard createCreditCard(String number, String cardHolderName, String securityCode, LocalDate dueDate) {
+        return new CreditMastercard(number, cardHolderName, securityCode, dueDate);
+    }
 }
 
 public class AbstractFactoryRunner {
     public static void main(String[] args) {
-        CreditCard masterCardCredit = new MastercardCreditCardFactory()
-                .create("12345678", "Mastercard Credit", "000", LocalDate.now().plusYears(5));
-        DebitCard masterCardDebit = new MastercardDebitCardFactory()
-                .create("1234", "Mastercard Debit", "000", LocalDate.now().plusYears(5));
-        CreditCard visaCardCredit = new VisaCreditCardFactory()
-                .create("1234", "Visa Credit", "000", LocalDate.now().plusYears(5));
-        DebitCard visaCardDebit = new VisaDebitCardFactory()
-                .create("1234", "Visa Debit", "000", LocalDate.now().plusYears(5));
+        CardFactory mastercardFactory = new MastercardFactory();
+        CardFactory visaCardFactory = new VisaCardFactory();
+
+        CreditCard masterCardCredit = mastercardFactory.createCreditCard("12345678",
+                "Mastercard Credit", "000", LocalDate.now().plusYears(5));
+        DebitCard masterCardDebit = mastercardFactory.createDebitCard("1234",
+                "Mastercard Debit", "000", LocalDate.now().plusYears(5));
+
+        CreditCard visaCardCredit = visaCardFactory.createCreditCard("1234", "Visa Credit",
+                "000", LocalDate.now().plusYears(5));
+        DebitCard visaCardDebit = visaCardFactory.createDebitCard("1234", "Visa Debit",
+                "000", LocalDate.now().plusYears(5));
 
         List<Card> cards = List.of(masterCardCredit, masterCardDebit, visaCardCredit, visaCardDebit);
 
